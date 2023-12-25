@@ -2,13 +2,16 @@ package com.example.jpaproject.domain;
 
 import com.example.jpaproject.domain.item.Item;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.*;
 
 @Entity
 @Table(name = "order_item")
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
     @Id @GeneratedValue
     @Column(name = "order_item_id")
@@ -24,4 +27,29 @@ public class OrderItem {
 
     private int orderPrice; // 주문 가격
     private int count; // 주문 수량
+
+    // 생성자 제한 Lombok으로 줄일 수 있음
+//    protected OrderItem(){ }
+
+    // == 생성 매서드 == //
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+
+    // == 비즈니스 로직 == //
+    // 제고수량을 원복해준다.
+    public void cancel(){
+        getItem().addStock(count);
+    }
+
+    // == 조회 로직 == //
+    public int getTotalPrice(){
+        return getOrderPrice() * getCount();
+    }
 }
