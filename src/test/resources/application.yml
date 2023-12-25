@@ -1,0 +1,19 @@
+spring:
+#  datasource:
+#    url: jdbc:h2:mem:test
+#    username: sa
+#    password: 1234
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+# 이건 테이블 만들고 삭제까지 해줌
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.orm.jdbc.bind: trace
+# 다 없어도 메모리 모드로 됨

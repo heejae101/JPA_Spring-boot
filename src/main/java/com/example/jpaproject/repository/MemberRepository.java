@@ -17,6 +17,7 @@ public class MemberRepository {
 
     public void save(Member member){
         // 영속성 퍼시스트
+        // 영속성 컨테스트 id값이 키가 됩니다.
         em.persist(member);
     }
 
